@@ -1,4 +1,4 @@
-package ru.romanow.inst
+package ru.romanow.inst.web
 
 import io.qameta.allure.Step
 import io.restassured.RestAssured
@@ -28,13 +28,25 @@ class CalcController(private val a: Int, private val b: Int) {
     }
 
     @Step("Plus operation")
-    fun plus() = given(requestSpecification)
-        .queryParam("a", a)
-        .queryParam("b", b)
-        .get()
-        .then()
-        .statusCode(200)
-        .extract()
-        .body()
-        .asString()
+    fun plus() = request("/plus")
+
+    @Step("Minus operation")
+    fun minus() = request("/minus")
+
+    @Step("Multiply operation")
+    fun multiply() = request("/multiply")
+
+    @Step("Divide operation")
+    fun divide() = request("/divide")
+
+    private fun request(path: String) =
+        given(requestSpecification)
+            .queryParam("a", a)
+            .queryParam("b", b)
+            .get(path)
+            .then()
+            .statusCode(200)
+            .extract()
+            .body()
+            .asString()
 }

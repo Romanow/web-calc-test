@@ -1,5 +1,7 @@
 name: Build project
-on: [run-tests]
+on:
+  repository_dispatch:
+    types: [run-tests]
 jobs:
   build:
     name: Build
